@@ -5,7 +5,7 @@ import piano.PianoFactory;
 
 public class Main {
     public static void main(String[] args) {
-        Piano piano = PianoFactory.createPiano("C3", 48);
+        Piano piano = PianoFactory.createPiano();
         MainFrame frame = new MainFrame(piano);
         ExerciseFactory.createKeyByLabelExcercise(frame);
         ExerciseFactory.createLabelByKeyExcercise(frame);
