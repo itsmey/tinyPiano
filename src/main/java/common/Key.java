@@ -5,9 +5,12 @@ import piano.Piano;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class Key implements Comparable<Key>{
+    private static final Logger logger = Logger.getLogger(Key.class.getName());
+
     private static String SHARP = "#";
     private static String FLAT = "b";
     private static List<String> NOTE_ORDER = Arrays.asList("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B");
@@ -43,11 +46,11 @@ public class Key implements Comparable<Key>{
 
     private Key normalize() {
         switch (note) {
-            case "Db": note = "C#";
-            case "Eb": note = "D#";
-            case "Gb": note = "F#";
-            case "Ab": note = "G#";
-            case "Bb": note = "A#";
+            case "Db": note = "C#"; break;
+            case "Eb": note = "D#"; break;
+            case "Gb": note = "F#"; break;
+            case "Ab": note = "G#"; break;
+            case "Bb": note = "A#"; break;
         }
 
         return this;
@@ -79,7 +82,7 @@ public class Key implements Comparable<Key>{
     }
 
     private Key previous() {
-        return new Key(nextNote(note), "C".equals(note) ? octave - 1 : octave);
+        return new Key(previousNote(note), "C".equals(note) ? octave - 1 : octave);
     }
 
     public static String next(String keyString) {
@@ -104,16 +107,19 @@ public class Key implements Comparable<Key>{
     }
 
     public static String transpose(String base, int semitones) {
+        logger.info("transposing " + base + " to " + semitones + " semitones");
         Key key = fromString(base).normalize();
 
         boolean plus = semitones > 0;
         semitones = Math.abs(semitones);
 
         while (semitones > 0) {
+            logger.info("loop: " + key + ", semitones = " + semitones);
             key = plus ? key.next() : key.previous();
             semitones--;
         }
 
+        logger.info("transpose result: " + key.toString());
         return key.toString();
     }
 
