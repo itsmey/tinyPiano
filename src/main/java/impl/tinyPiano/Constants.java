@@ -4,6 +4,7 @@ import java.awt.*;
 
 class Constants {
     static String SHARP = "#";
+    static String FLAT = "b";
     private static int SCALE = 3;
     static int WIDTH_W = 8 * SCALE;
     static int WIDTH_B = 4 * SCALE;

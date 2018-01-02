@@ -58,7 +58,6 @@ public class PitchExercise extends AbstractExercise implements Exercise {
 
     @Override
     public void stop() {
-        System.out.println("stop");
         piano.setShowKeyLabels(true);
         piano.removeKeyListener(LISTENER);
         frame.addExerciseComponent(repeatButton, false);

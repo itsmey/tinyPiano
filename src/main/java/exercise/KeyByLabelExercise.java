@@ -46,7 +46,7 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
     @Override
     public void next() {
         keyToGuess = Utils.getRandomKey(piano);
-        taskLabel.setText("Задание: нажмите клавишу " + keyToGuess);
+        taskLabel.setText("Задание: нажмите клавишу " + Utils.keyToString(keyToGuess));
     }
 
 
