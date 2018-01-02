@@ -4,8 +4,6 @@ import frame.MainFrame;
 import impl.tinyPiano.Utils;
 import piano.PianoKeyListener;
 
-import java.util.Random;
-
 public class KeyByLabelExercise extends AbstractExercise implements Exercise {
     private String keyToGuess;
 
@@ -14,8 +12,10 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
         public void onKeyPressed(String key) {
             if (key.equals(keyToGuess)) {
                 stats.correct();
+                messageLabel.setText("Правильно!");
             } else {
                 stats.mistake();
+                messageLabel.setText("Ошибка!");
             }
             statusLabel.setText(stats.toString());
             next();
@@ -33,6 +33,7 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
         piano.addKeyListener(LISTENER);
         piano.setShowKeyLabels(false);
         statusLabel.setText("");
+        messageLabel.setText("");
         next();
     }
 

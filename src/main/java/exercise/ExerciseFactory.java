@@ -9,4 +9,7 @@ public class ExerciseFactory {
     public static Exercise createLabelByKeyExcercise(MainFrame frame) {
         return new LabelByKeyExercise(frame);
     }
+    public static Exercise createPitchExcercise(MainFrame frame) {
+        return new PitchExercise(frame);
+    }
 }

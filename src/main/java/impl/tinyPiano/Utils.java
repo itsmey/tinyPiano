@@ -3,6 +3,8 @@ package impl.tinyPiano;
 import piano.Piano;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,5 +59,37 @@ public class Utils {
         }
 
         return key;
+    }
+
+    static int compareKeys(String key1, String key2) {
+        if (key1.equals(key2))
+            return 0;
+
+        String octave1 = getMatch(OCTAVE_PATTERN, key1);
+        String octave2 = getMatch(OCTAVE_PATTERN, key2);
+        if (!octave1.equals(octave2))
+            return octave1.compareTo(octave2);
+
+        String note1 = getMatch(NOTE_PATTERN, key1);
+        String note2 = getMatch(NOTE_PATTERN, key2);
+        final List<String> order = Arrays.asList("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B");
+            return order.indexOf(note1) - order.indexOf(note2);
+    }
+
+    public static int getInterval(String key1, String key2) {
+        int compareResult = compareKeys(key1, key2);
+        if (compareResult == 0)
+            return 0;
+
+        String lowerKey = compareResult > 0 ? key2 : key1;
+        String higherKey = compareResult < 0 ? key2 : key1;
+
+        int semitones = 0;
+        while (!lowerKey.equals(higherKey)) {
+            lowerKey = next(lowerKey);
+            semitones++;
+        }
+
+        return semitones;
     }
 }

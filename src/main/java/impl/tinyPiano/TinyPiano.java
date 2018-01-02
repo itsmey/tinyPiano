@@ -16,11 +16,14 @@ public class TinyPiano implements Piano {
     private List<PianoKeyListener> listeners;
     private String firstKey;
     private int numberOfKeys;
+    private AudioSource audioSource;
 
     public TinyPiano(String firstKey, int numberOfKeys, AudioSource audioSource) {
         listeners = new ArrayList<>();
         this.firstKey = firstKey;
         this.numberOfKeys = numberOfKeys;
+        this.audioSource = audioSource;
+
         panel = new TinyPianoPanel(firstKey, numberOfKeys);
         panel.addMouseListener(new MouseAdapter() {
             @Override
@@ -36,6 +39,11 @@ public class TinyPiano implements Piano {
     @Override
     public void setHighlighted(Set<String> keys) {
         panel.setHighlighted(keys);
+    }
+
+    @Override
+    public void play(String key) {
+        audioSource.playKey(key);
     }
 
     @Override

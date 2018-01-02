@@ -13,4 +13,5 @@ public interface Piano {
     void highlight(String key);
     void cancelHighlight(String key);
     void setHighlighted(Set<String> keys);
+    void play(String key);
 }

@@ -9,6 +9,7 @@ public class Main {
         MainFrame frame = new MainFrame(piano);
         ExerciseFactory.createKeyByLabelExcercise(frame);
         ExerciseFactory.createLabelByKeyExcercise(frame);
+        ExerciseFactory.createPitchExcercise(frame);
         frame.setVisible(true);
     }
 }

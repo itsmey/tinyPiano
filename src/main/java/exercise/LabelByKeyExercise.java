@@ -7,20 +7,19 @@ import javax.swing.*;
 
 public class LabelByKeyExercise extends AbstractExercise implements Exercise {
     private String keyToGuess;
-    private MainFrame frame;
     private JButton answerButton = new JButton("Ответить");
     private JTextField answerField = new JTextField(4);
 
     LabelByKeyExercise(MainFrame frame) {
         super(frame);
 
-        this.frame = frame;
-
         answerButton.addActionListener(e -> {
             if (answerField.getText().equals(keyToGuess)) {
                 stats.correct();
+                messageLabel.setText("Правильно!");
             } else {
                 stats.mistake();
+                messageLabel.setText("Ошибка!");
             }
             statusLabel.setText(stats.toString());
             next();
@@ -36,6 +35,7 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
         next();
         taskLabel.setText("Задание: напишите обозначение выделенной клавиши");
         statusLabel.setText("");
+        messageLabel.setText("");
         frame.addExerciseComponent(answerField, true);
         frame.addExerciseComponent(answerButton, true);
     }

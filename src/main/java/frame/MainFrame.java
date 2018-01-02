@@ -8,8 +8,8 @@ import java.awt.*;
 import java.util.HashSet;
 
 public class MainFrame extends JFrame {
-    private static final int SELECTOR_PANEL_HEIGHT = 100;
-    private static final int EXERCISE_PANEL_HEIGHT = 200;
+    private static final int SELECTOR_PANEL_HEIGHT = 80;
+    private static final int EXERCISE_PANEL_HEIGHT = 150;
 
     private Piano piano;
     private Exercise[] exercises;
@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
     private JPanel exerciseComponentsPanel = new JPanel();
     private JLabel taskLabel = new JLabel("Задание не выбрано", JLabel.CENTER);
     private JLabel statusLabel = new JLabel("", JLabel.CENTER);
+    private JLabel messageLabel = new JLabel("", JLabel.CENTER);
     private JComboBox<Exercise> selectorBox;
     private JButton selectButton = new JButton("Выбрать");
     private JButton stopButton = new JButton("Остановить");
@@ -34,7 +35,7 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout(3,3));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        exercisePanel.setLayout(new GridLayout(3,1));
+        exercisePanel.setLayout(new GridLayout(4,1));
         selectorPanel.setPreferredSize(new Dimension(pianoWidth, SELECTOR_PANEL_HEIGHT));
         exercisePanel.setPreferredSize(new Dimension(pianoWidth, EXERCISE_PANEL_HEIGHT));
 
@@ -52,6 +53,7 @@ public class MainFrame extends JFrame {
                 exercise = null;
             }
             statusLabel.setText("");
+            messageLabel.setText("");
             taskLabel.setText("Задание не выбрано");
             piano.setHighlighted(new HashSet<>());
         });
@@ -62,6 +64,7 @@ public class MainFrame extends JFrame {
 
         exercisePanel.add(taskLabel);
         exercisePanel.add(statusLabel);
+        exercisePanel.add(messageLabel);
         exercisePanel.add(exerciseComponentsPanel);
 
         add(selectorPanel, BorderLayout.PAGE_START);
@@ -87,6 +90,10 @@ public class MainFrame extends JFrame {
         return statusLabel;
     }
 
+    public JLabel getMessageLabel() {
+        return messageLabel;
+    }
+
     public void addExercise(Exercise exercise) {
         selectorBox.addItem(exercise);
     }
@@ -96,5 +103,6 @@ public class MainFrame extends JFrame {
             exerciseComponentsPanel.add(component);
         else
             exerciseComponentsPanel.remove(component);
+        repaint();
     }
 }
