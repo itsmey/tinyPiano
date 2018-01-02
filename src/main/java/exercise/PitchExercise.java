@@ -1,12 +1,11 @@
 package exercise;
 
+import common.Key;
+import common.Utils;
 import frame.MainFrame;
-import impl.tinyPiano.Utils;
 import piano.PianoKeyListener;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PitchExercise extends AbstractExercise implements Exercise {
     private String keyToGuess;
@@ -24,7 +23,7 @@ public class PitchExercise extends AbstractExercise implements Exercise {
                 messageLabel.setText("Правильно!");
             } else {
                 stats.mistake();
-                int difference = Utils.getInterval(keyToGuess, key);
+                int difference = Key.distance(keyToGuess, key);
                 messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
             }
             statusLabel.setText(stats.toString());
@@ -67,7 +66,7 @@ public class PitchExercise extends AbstractExercise implements Exercise {
     @Override
     public void next() {
         nextButton.setEnabled(false);
-        keyToGuess = Utils.getRandomKey(piano);
+        keyToGuess = Key.random(piano);
         piano.play(keyToGuess);
     }
 

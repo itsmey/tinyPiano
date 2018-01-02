@@ -1,5 +1,7 @@
 package impl.tinyPiano;
 
+import common.Key;
+import common.Utils;
 import piano.AudioSource;
 import piano.Piano;
 import piano.PianoKeyListener;
@@ -88,7 +90,7 @@ public class TinyPiano implements Piano {
 
     @Override
     public String getLastKey() {
-        return Utils.addInterval(firstKey, numberOfKeys - 1);
+        return Key.transpose(firstKey, numberOfKeys - 1);
     }
 
     @Override

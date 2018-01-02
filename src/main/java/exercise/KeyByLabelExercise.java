@@ -1,7 +1,8 @@
 package exercise;
 
+import common.Key;
+import common.Utils;
 import frame.MainFrame;
-import impl.tinyPiano.Utils;
 import piano.PianoKeyListener;
 
 public class KeyByLabelExercise extends AbstractExercise implements Exercise {
@@ -15,7 +16,7 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
                 messageLabel.setText("Правильно!");
             } else {
                 stats.mistake();
-                int difference = Utils.getInterval(keyToGuess, key);
+                int difference = Key.distance(keyToGuess, key);
                 messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
             }
             statusLabel.setText(stats.toString());
@@ -46,8 +47,8 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
 
     @Override
     public void next() {
-        keyToGuess = Utils.getRandomKey(piano);
-        taskLabel.setText("Задание: нажмите клавишу " + Utils.keyToString(keyToGuess));
+        keyToGuess = Key.random(piano);
+        taskLabel.setText("Задание: нажмите клавишу " + Key.title(keyToGuess));
     }
 
     @Override

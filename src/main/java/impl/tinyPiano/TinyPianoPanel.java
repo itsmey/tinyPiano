@@ -1,5 +1,8 @@
 package impl.tinyPiano;
 
+import common.Key;
+import common.Utils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -22,16 +25,16 @@ class TinyPianoPanel extends JPanel {
         int y = 0;
         String key = firstKey;
         while (i < numberOfKeys) {
-            if (Utils.isBlack(key)) {
-                blackKeys.put(key, new Rectangle(x - Constants.WIDTH_B / 2, y, Constants.WIDTH_B, Constants.HEIGHT_B));
+            if (Key.isBlack(key)) {
+                blackKeys.put(key, new Rectangle(x - Dimensions.WIDTH_B / 2, y, Dimensions.WIDTH_B, Dimensions.HEIGHT_B));
             } else {
-                whiteKeys.put(key, new Rectangle(x, y, Constants.WIDTH_W, Constants.HEIGHT_W));
-                x += Constants.WIDTH_W;
+                whiteKeys.put(key, new Rectangle(x, y, Dimensions.WIDTH_W, Dimensions.HEIGHT_W));
+                x += Dimensions.WIDTH_W;
             }
-            key = Utils.next(key);
+            key = Key.next(key);
             i++;
         }
-        setPreferredSize(new Dimension(x, Constants.HEIGHT_W));
+        setPreferredSize(new Dimension(x, Dimensions.HEIGHT_W));
     }
 
     @Override
@@ -53,9 +56,9 @@ class TinyPianoPanel extends JPanel {
             Rectangle r = e.getValue();
             g.drawRect(r.x, r.y, r.width, r.height);
             if (highlighted.contains(e.getKey())) {
-                g.setColor(Constants.HIGHLIGHT_COLOR);
-                int m = Constants.HIGHLIGHT_OVAL_MARGIN;
-                g.fillOval(r.x + m/2, r.y + Constants.HEIGHT_W - Constants.WIDTH_W + m/2, Constants.WIDTH_W - m, Constants.WIDTH_W - m);
+                g.setColor(Dimensions.HIGHLIGHT_COLOR);
+                int m = Dimensions.HIGHLIGHT_OVAL_MARGIN;
+                g.fillOval(r.x + m/2, r.y + Dimensions.HEIGHT_W - Dimensions.WIDTH_W + m/2, Dimensions.WIDTH_W - m, Dimensions.WIDTH_W - m);
                 g.setColor(color);
             }
             if (canShowLabels) {
@@ -63,7 +66,7 @@ class TinyPianoPanel extends JPanel {
             }
         }
 
-        g.setColor(Constants.HIGHLIGHT_COLOR);
+        g.setColor(Dimensions.HIGHLIGHT_COLOR);
         for (Rectangle r : blackHighlighted) {
             g.fillRect(r.x, r.y, r.width, r.height);
         }
@@ -93,7 +96,7 @@ class TinyPianoPanel extends JPanel {
         int offset = 0;
         int length = chars.length;
         int width = g.getFontMetrics().charsWidth(chars, offset, length);
-        g.drawChars(chars, offset, length, x + (Constants.WIDTH_W - width) / 2, y + Constants.HEIGHT_W - 3);
+        g.drawChars(chars, offset, length, x + (Dimensions.WIDTH_W - width) / 2, y + Dimensions.HEIGHT_W - 3);
     }
 
     void highlight(String key) {

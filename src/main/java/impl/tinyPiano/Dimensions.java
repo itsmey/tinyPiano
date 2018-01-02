@@ -2,9 +2,7 @@ package impl.tinyPiano;
 
 import java.awt.*;
 
-class Constants {
-    static String SHARP = "#";
-    static String FLAT = "b";
+public class Dimensions {
     private static int SCALE = 3;
     static int WIDTH_W = 8 * SCALE;
     static int WIDTH_B = 4 * SCALE;

@@ -1,7 +1,9 @@
 package exercise;
 
+import common.Interval;
+import common.Key;
+import common.Utils;
 import frame.MainFrame;
-import impl.tinyPiano.Utils;
 import piano.PianoKeyListener;
 
 import java.util.Random;
@@ -17,7 +19,7 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
                 messageLabel.setText("Правильно!");
             } else {
                 stats.mistake();
-                int difference = Utils.getInterval(keyToGuess, key);
+                int difference = Key.distance(keyToGuess, key);
                 messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
             }
             statusLabel.setText(stats.toString());
@@ -48,20 +50,20 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
 
     @Override
     public void next() {
-        String baseKey = Utils.getRandomKey(piano);
-        int interval = Utils.getRandomInterval();
+        String baseKey = Key.random(piano);
+        int interval = Interval.random();
         if (new Random().nextBoolean()) interval = -interval;
 
-        if ((interval < 0) && (Utils.getInterval(piano.getFirstKey(), baseKey) < Math.abs(interval)))
+        if ((interval < 0) && (Key.distance(piano.getFirstKey(), baseKey) < Math.abs(interval)))
             interval = -interval;
 
-        if ((interval > 0) && (Utils.getInterval(piano.getLastKey(), baseKey) < interval))
+        if ((interval > 0) && (Key.distance(piano.getLastKey(), baseKey) < interval))
             interval = -interval;
 
-        keyToGuess = Utils.addInterval(baseKey, interval);
+        keyToGuess = Key.transpose(baseKey, interval);
         String higherOrLower = interval >= 0 ? "выше" : "ниже";
         taskLabel.setText("Задание: сыграйте ноту, которая " + higherOrLower + " ноты " +
-                Utils.keyToString(baseKey) + " на " + Utils.intervalToString(interval) + " (" + Math.abs(interval) + " полутонов)");
+                Key.title(baseKey) + " на " + Interval.title(interval) + " (" + Math.abs(interval) + " полутонов)");
     }
 
 

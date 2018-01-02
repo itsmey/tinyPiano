@@ -1,7 +1,7 @@
 package exercise;
 
+import common.Key;
 import frame.MainFrame;
-import impl.tinyPiano.Utils;
 
 import javax.swing.*;
 
@@ -14,12 +14,13 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
         super(frame);
 
         answerButton.addActionListener(e -> {
-            if (answerField.getText().equals(keyToGuess)) {
+            String answer = Key.normalize(answerField.getText());
+            if (answer.equals(Key.normalize(keyToGuess))) {
                 stats.correct();
                 messageLabel.setText("Правильно!");
             } else {
                 stats.mistake();
-                int difference = Utils.getInterval(keyToGuess, answerField.getText());
+                int difference = Key.distance(keyToGuess, answer);
                 messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
             }
             statusLabel.setText(stats.toString());
@@ -37,6 +38,7 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
         taskLabel.setText("Задание: напишите обозначение выделенной клавиши");
         statusLabel.setText("");
         messageLabel.setText("");
+        answerField.setText("");
         frame.addExerciseComponent(answerField, true);
         frame.addExerciseComponent(answerButton, true);
     }
@@ -50,8 +52,9 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
 
     @Override
     public void next() {
+        answerField.setText("");
         piano.cancelHighlight(keyToGuess);
-        keyToGuess = Utils.getRandomKey(piano);
+        keyToGuess = Key.random(piano);
         piano.highlight(keyToGuess);
     }
 
