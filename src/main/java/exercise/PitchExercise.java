@@ -6,8 +6,10 @@ import frame.MainFrame;
 import piano.PianoKeyListener;
 
 import javax.swing.*;
+import java.util.logging.Logger;
 
 public class PitchExercise extends AbstractExercise implements Exercise {
+    private static final Logger logger = Logger.getLogger(PitchExercise.class.getName());
     private String keyToGuess;
     private String lastKey;
     private JButton repeatButton = new JButton("Звук");
@@ -68,6 +70,7 @@ public class PitchExercise extends AbstractExercise implements Exercise {
         nextButton.setEnabled(false);
         keyToGuess = Key.random(piano);
         piano.play(keyToGuess);
+        logger.info("next: " + keyToGuess);
     }
 
     @Override

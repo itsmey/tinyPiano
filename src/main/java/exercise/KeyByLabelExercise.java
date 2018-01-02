@@ -1,11 +1,13 @@
 package exercise;
 
 import common.Key;
-import common.Utils;
 import frame.MainFrame;
 import piano.PianoKeyListener;
 
+import java.util.logging.Logger;
+
 public class KeyByLabelExercise extends AbstractExercise implements Exercise {
+    private static final Logger logger = Logger.getLogger(KeyByLabelExercise.class.getName());
     private String keyToGuess;
 
     private final PianoKeyListener LISTENER = new PianoKeyListener() {
@@ -49,6 +51,7 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
     public void next() {
         keyToGuess = Key.random(piano);
         taskLabel.setText("Задание: нажмите клавишу " + Key.title(keyToGuess));
+        logger.info("next: " + keyToGuess);
     }
 
     @Override

@@ -79,8 +79,8 @@ public class TinyPiano implements Piano {
 
     @Override
     public void setShowKeyLabels(boolean show) {
-        panel.showLabels(show);
-        panel.paintComponent(panel.getGraphics());
+//        panel.showLabels(show);
+//        panel.paintComponent(panel.getGraphics());
     }
 
     @Override

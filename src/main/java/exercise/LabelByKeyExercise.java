@@ -4,8 +4,10 @@ import common.Key;
 import frame.MainFrame;
 
 import javax.swing.*;
+import java.util.logging.Logger;
 
 public class LabelByKeyExercise extends AbstractExercise implements Exercise {
+    private static final Logger logger = Logger.getLogger(LabelByKeyExercise.class.getName());
     private String keyToGuess;
     private JButton answerButton = new JButton("Ответить");
     private JTextField answerField = new JTextField(4);
@@ -14,14 +16,20 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
         super(frame);
 
         answerButton.addActionListener(e -> {
-            String answer = Key.normalize(answerField.getText());
-            if (answer.equals(Key.normalize(keyToGuess))) {
-                stats.correct();
-                messageLabel.setText("Правильно!");
+            if (Key.validate(answerField.getText().toUpperCase())) {
+                String answer = Key.normalize(answerField.getText().toUpperCase());
+                logger.info("checking answer. normalized answer - " + answer + ", right answer - " + keyToGuess);
+                if (answer.equals(Key.normalize(keyToGuess))) {
+                    stats.correct();
+                    messageLabel.setText("Правильно!");
+                } else {
+                    stats.mistake();
+                    int difference = Key.distance(keyToGuess, answer);
+                    messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
+                }
             } else {
                 stats.mistake();
-                int difference = Key.distance(keyToGuess, answer);
-                messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
+                messageLabel.setText("Введенное не является обозначением клавиши!");
             }
             statusLabel.setText(stats.toString());
             next();
@@ -56,6 +64,8 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
         piano.cancelHighlight(keyToGuess);
         keyToGuess = Key.random(piano);
         piano.highlight(keyToGuess);
+        answerField.requestFocus();
+        logger.info("next: " + keyToGuess);
     }
 
     @Override

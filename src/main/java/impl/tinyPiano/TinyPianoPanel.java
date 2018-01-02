@@ -100,12 +100,12 @@ class TinyPianoPanel extends JPanel {
     }
 
     void highlight(String key) {
-        highlighted.add(key);
+        highlighted.add(Key.normalize(key));
         paintComponent(getGraphics());
     }
 
     void cancelHighlight(String key) {
-        highlighted.remove(key);
+        highlighted.remove(Key.normalize(key));
         paintComponent(getGraphics());
     }
 

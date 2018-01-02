@@ -2,13 +2,14 @@ package exercise;
 
 import common.Interval;
 import common.Key;
-import common.Utils;
 import frame.MainFrame;
 import piano.PianoKeyListener;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class KeyByIntervalExercise extends AbstractExercise implements Exercise {
+    private static final Logger logger = Logger.getLogger(KeyByIntervalExercise.class.getName());
     private String keyToGuess;
 
     private final PianoKeyListener LISTENER = new PianoKeyListener() {
@@ -64,6 +65,8 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
         String higherOrLower = interval >= 0 ? "выше" : "ниже";
         taskLabel.setText("Задание: сыграйте ноту, которая " + higherOrLower + " ноты " +
                 Key.title(baseKey) + " на " + Interval.title(interval) + " (" + Math.abs(interval) + " полутонов)");
+
+        logger.info("next: base key - " + baseKey + ", key to guess - " + keyToGuess + ", interval - " + interval);
     }
 
 
