@@ -9,6 +9,7 @@ public interface Piano {
     void removeKeyListener(PianoKeyListener listener);
     void setShowKeyLabels(boolean show);
     String getFirstKey();
+    String getLastKey();
     int getNumberOfKeys();
     void highlight(String key);
     void cancelHighlight(String key);

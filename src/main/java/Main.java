@@ -10,6 +10,7 @@ public class Main {
         ExerciseFactory.createKeyByLabelExcercise(frame);
         ExerciseFactory.createLabelByKeyExcercise(frame);
         ExerciseFactory.createPitchExcercise(frame);
+        ExerciseFactory.createKeyByIntervalExercise(frame);
         frame.setVisible(true);
     }
 }

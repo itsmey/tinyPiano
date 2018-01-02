@@ -19,7 +19,8 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
                 messageLabel.setText("Правильно!");
             } else {
                 stats.mistake();
-                messageLabel.setText("Ошибка!");
+                int difference = Utils.getInterval(keyToGuess, answerField.getText());
+                messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
             }
             statusLabel.setText(stats.toString());
             next();

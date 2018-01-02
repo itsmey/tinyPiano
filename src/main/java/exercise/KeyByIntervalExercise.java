@@ -4,7 +4,9 @@ import frame.MainFrame;
 import impl.tinyPiano.Utils;
 import piano.PianoKeyListener;
 
-public class KeyByLabelExercise extends AbstractExercise implements Exercise {
+import java.util.Random;
+
+public class KeyByIntervalExercise extends AbstractExercise implements Exercise {
     private String keyToGuess;
 
     private final PianoKeyListener LISTENER = new PianoKeyListener() {
@@ -23,7 +25,7 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
         }
     };
 
-    KeyByLabelExercise(MainFrame frame) {
+    KeyByIntervalExercise(MainFrame frame) {
         super(frame);
         frame.addExercise(this);
     }
@@ -46,12 +48,25 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
 
     @Override
     public void next() {
-        keyToGuess = Utils.getRandomKey(piano);
-        taskLabel.setText("Задание: нажмите клавишу " + Utils.keyToString(keyToGuess));
+        String baseKey = Utils.getRandomKey(piano);
+        int interval = Utils.getRandomInterval();
+        if (new Random().nextBoolean()) interval = -interval;
+
+        if ((interval < 0) && (Utils.getInterval(piano.getFirstKey(), baseKey) < Math.abs(interval)))
+            interval = -interval;
+
+        if ((interval > 0) && (Utils.getInterval(piano.getLastKey(), baseKey) < interval))
+            interval = -interval;
+
+        keyToGuess = Utils.addInterval(baseKey, interval);
+        String higherOrLower = interval >= 0 ? "выше" : "ниже";
+        taskLabel.setText("Задание: сыграйте ноту, которая " + higherOrLower + " ноты " +
+                Utils.keyToString(baseKey) + " на " + Utils.intervalToString(interval) + " (" + Math.abs(interval) + " полутонов)");
     }
+
 
     @Override
     public String toString() {
-        return "Определить клавишу по обозначению";
+        return "Определение недостающей ноты в интервале";
     }
 }

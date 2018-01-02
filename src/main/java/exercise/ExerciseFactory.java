@@ -12,4 +12,7 @@ public class ExerciseFactory {
     public static Exercise createPitchExcercise(MainFrame frame) {
         return new PitchExercise(frame);
     }
+    public static Exercise createKeyByIntervalExercise(MainFrame frame) {
+        return new KeyByIntervalExercise(frame);
+    }
 }

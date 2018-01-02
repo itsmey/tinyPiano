@@ -57,6 +57,32 @@ public class Utils {
         return nextNote + octave;
     }
 
+    public static String previous(String key) {
+        key = normalize(key);
+
+        String note = getMatch(NOTE_PATTERN, key);
+        String octave = getMatch(OCTAVE_PATTERN, key);
+        if ("C".equals(note)) {
+            octave = String.valueOf(Integer.valueOf(octave) - 1);
+        }
+        String previousNote = null;
+        switch (note) {
+            case "C#":
+            case "D#":
+            case "F#":
+            case "G#":
+            case "A#": previousNote = note.substring(0,1); break;
+            case "E": previousNote = "D#"; break;
+            case "B": previousNote = "A#"; break;
+            case "C": previousNote = "B"; break;
+            case "D": previousNote = "C#"; break;
+            case "F": previousNote = "E"; break;
+            case "G": previousNote = "F#"; break;
+            case "A": previousNote = "G#"; break;
+        }
+        return previousNote + octave;
+    }
+
     static boolean isWithinRectangle(int x, int y, Rectangle r) {
         return (x > r.x) && (x < r.x + r.width) && (y > r.y) && (y < r.y + r.height);
     }
@@ -186,5 +212,43 @@ public class Utils {
         }
 
         return text += "(" + key + ")";
+    }
+
+    public static int getRandomInterval() {
+        return new Random().nextInt(13);
+    }
+
+    public static String addInterval(String key, int semitones) {
+        boolean plus = semitones > 0;
+        semitones = Math.abs(semitones);
+        while (semitones > 0) {
+            if (plus)
+                key = next(key);
+            else
+                key = previous(key);
+            semitones--;
+        }
+
+        return key;
+    }
+
+    public static String intervalToString(int interval) {
+        switch (Math.abs(interval)) {
+            case 0: return "чистую приму";
+            case 1: return "малую секунду";
+            case 2: return "большую секунду";
+            case 3: return "малую терцию";
+            case 4: return "большую терцию";
+            case 5: return "чистую кварту";
+            case 6: return "тритон";
+            case 7: return "чистую квинту";
+            case 8: return "малую сексту";
+            case 9: return "большую сексту";
+            case 10: return "малую септиму";
+            case 11: return "большую септиму";
+            case 12: return "читую октаву";
+        }
+
+        throw new IllegalStateException();
     }
 }

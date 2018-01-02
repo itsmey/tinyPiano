@@ -87,6 +87,11 @@ public class TinyPiano implements Piano {
     }
 
     @Override
+    public String getLastKey() {
+        return Utils.addInterval(firstKey, numberOfKeys - 1);
+    }
+
+    @Override
     public int getNumberOfKeys() {
         return numberOfKeys;
     }
