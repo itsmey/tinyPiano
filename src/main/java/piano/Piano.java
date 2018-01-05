@@ -12,6 +12,7 @@ public interface Piano {
     String getLastKey();
     int getNumberOfKeys();
     void highlight(String key);
+    void highlight(String key, String text);
     void cancelHighlight(String key);
     void setHighlighted(Set<String> keys);
     void play(String key);

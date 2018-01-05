@@ -11,6 +11,7 @@ public class Main {
         ExerciseFactory.createLabelByKeyExcercise(frame);
         ExerciseFactory.createPitchExcercise(frame);
         ExerciseFactory.createKeyByIntervalExercise(frame);
+        ExerciseFactory.createPickHighExercise(frame);
         frame.setVisible(true);
     }
 }

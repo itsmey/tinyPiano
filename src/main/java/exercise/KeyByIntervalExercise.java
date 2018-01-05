@@ -51,20 +51,21 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
 
     @Override
     public void next() {
-        String baseKey = Key.random(piano);
-        int interval = Interval.random();
-        if (new Random().nextBoolean()) interval = -interval;
+        Interval interval = Interval.random(piano);
+        String baseKey;
+        String higherOrLower;
+        if (new Random().nextBoolean()) {
+            baseKey = interval.getHigherKey();
+            keyToGuess = interval.getLowerKey();
+            higherOrLower = "ниже";
+        } else {
+            baseKey = interval.getLowerKey();
+            keyToGuess = interval.getHigherKey();
+            higherOrLower = "выше";
+        }
 
-        if ((interval < 0) && (Key.distance(piano.getFirstKey(), baseKey) < Math.abs(interval)))
-            interval = -interval;
-
-        if ((interval > 0) && (Key.distance(piano.getLastKey(), baseKey) < interval))
-            interval = -interval;
-
-        keyToGuess = Key.transpose(baseKey, interval);
-        String higherOrLower = interval >= 0 ? "выше" : "ниже";
         taskLabel.setText("Задание: сыграйте ноту, которая " + higherOrLower + " ноты " +
-                Key.title(baseKey) + " на " + Interval.title(interval) + " (" + Math.abs(interval) + " полутонов)");
+                Key.title(baseKey) + " на " + interval.title() + " (" + Math.abs(interval.distance()) + " полутонов)");
 
         logger.info("next: base key - " + baseKey + ", key to guess - " + keyToGuess + ", interval - " + interval);
     }

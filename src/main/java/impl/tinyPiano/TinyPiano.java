@@ -56,6 +56,13 @@ public class TinyPiano implements Piano {
     }
 
     @Override
+    public void highlight(String key, String text) {
+        if (key == null || text == null)
+            return;
+        panel.highlight(key, text);
+    }
+
+    @Override
     public void cancelHighlight(String key) {
         if (key == null)
             return;
@@ -79,8 +86,8 @@ public class TinyPiano implements Piano {
 
     @Override
     public void setShowKeyLabels(boolean show) {
-//        panel.showLabels(show);
-//        panel.paintComponent(panel.getGraphics());
+        panel.showLabels(show);
+        panel.paintComponent(panel.getGraphics());
     }
 
     @Override

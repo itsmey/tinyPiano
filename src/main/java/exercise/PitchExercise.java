@@ -1,7 +1,6 @@
 package exercise;
 
 import common.Key;
-import common.Utils;
 import frame.MainFrame;
 import piano.PianoKeyListener;
 

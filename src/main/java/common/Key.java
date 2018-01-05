@@ -144,6 +144,10 @@ public class Key implements Comparable<Key>{
         return semitones;
     }
 
+    public static int compareKeys(String key1String, String key2String) {
+        return fromString(key1String).normalize().compareTo(fromString(key2String).normalize());
+    }
+
     public static String random(Piano piano) {
         int n = new Random().nextInt(piano.getNumberOfKeys());
 

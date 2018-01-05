@@ -15,4 +15,7 @@ public class ExerciseFactory {
     public static Exercise createKeyByIntervalExercise(MainFrame frame) {
         return new KeyByIntervalExercise(frame);
     }
+    public static Exercise createPickHighExercise(MainFrame frame) {
+        return new PickHighExercise(frame);
+    }
 }
