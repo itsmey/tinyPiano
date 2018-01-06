@@ -51,7 +51,7 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
 
     @Override
     public void next() {
-        Interval interval = Interval.random(piano);
+        Interval interval = Interval.random(piano, frame.getIntervalsList());
         String baseKey;
         String higherOrLower;
         if (new Random().nextBoolean()) {
@@ -70,6 +70,10 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
         logger.info("next: base key - " + baseKey + ", key to guess - " + keyToGuess + ", interval - " + interval);
     }
 
+    @Override
+    public boolean isConfigurable() {
+        return true;
+    }
 
     @Override
     public String toString() {

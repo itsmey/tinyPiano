@@ -2,11 +2,11 @@ package exercise;
 
 import common.Interval;
 import frame.MainFrame;
+import frame.Settings;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public class PickHighExercise extends AbstractExercise implements Exercise {
@@ -92,7 +92,7 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
         playAButton.setText("Играть А");
         playBButton.setText("Играть В");
         nextButton.setEnabled(false);
-        Interval interval = Interval.randomButNotUnison(piano);
+        Interval interval = Interval.randomButNotUnison(piano, frame.getIntervalsList());
         if (new Random().nextBoolean()) {
             keyA = interval.getHigherKey();
             keyB = interval.getLowerKey();
@@ -104,6 +104,11 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
         }
         piano.play(keyA);
         piano.play(keyB);
+    }
+
+    @Override
+    public boolean isConfigurable() {
+        return true;
     }
 
     @Override

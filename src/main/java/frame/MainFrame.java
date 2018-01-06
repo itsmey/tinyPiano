@@ -1,13 +1,15 @@
 package frame;
 
+import common.Interval;
 import exercise.Exercise;
 import piano.Piano;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.HashSet;
+import java.util.List;
+import java.awt.*;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements Settings {
     private static final int SELECTOR_PANEL_HEIGHT = 80;
     private static final int EXERCISE_PANEL_HEIGHT = 150;
 
@@ -22,6 +24,8 @@ public class MainFrame extends JFrame {
     private JComboBox<Exercise> selectorBox;
     private JButton selectButton = new JButton("Выбрать");
     private JButton stopButton = new JButton("Остановить");
+    private JButton configureButton = new JButton("Настроить...");
+    private ConfigureFrame configureFrame = new ConfigureFrame();
 
     private Exercise exercise;
 
@@ -40,6 +44,10 @@ public class MainFrame extends JFrame {
         exercisePanel.setPreferredSize(new Dimension(pianoWidth, EXERCISE_PANEL_HEIGHT));
 
         selectorBox = new JComboBox<>();
+        selectorBox.addActionListener(e -> {
+            if (selectorBox.getSelectedItem() != null)
+                configureButton.setEnabled(((Exercise) selectorBox.getSelectedItem()).isConfigurable());
+        });
         selectButton.addActionListener(e -> {
             stopButton.doClick();
             if (selectorBox.getSelectedItem() != null) {
@@ -57,10 +65,12 @@ public class MainFrame extends JFrame {
             taskLabel.setText("Задание не выбрано");
             piano.setHighlighted(new HashSet<>());
         });
+        configureButton.addActionListener(e -> configureFrame.setVisible(true));
 
         selectorPanel.add(selectorBox);
         selectorPanel.add(selectButton);
         selectorPanel.add(stopButton);
+        selectorPanel.add(configureButton);
 
         exercisePanel.add(taskLabel);
         exercisePanel.add(statusLabel);
@@ -104,5 +114,10 @@ public class MainFrame extends JFrame {
         else
             exerciseComponentsPanel.remove(component);
         repaint();
+    }
+
+    @Override
+    public List<Interval> getIntervalsList() {
+        return configureFrame.getIntervalsList();
     }
 }
