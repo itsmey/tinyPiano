@@ -6,8 +6,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Interval {
-    private static final int N_INTERVALS = 13;
-
     public static Interval UNISON = new Interval("C3", "C3");
     public static Interval MINOR_SECOND = new Interval("C3", "C#3");
     public static Interval MAJOR_SECOND = new Interval("C3", "D3");
@@ -70,7 +68,7 @@ public class Interval {
     }
 
     public static Interval random(Piano piano) {
-        return get(piano, new Random().nextInt(N_INTERVALS));
+        return random(piano, getAll());
     }
 
     public static Interval randomButNotUnison(Piano piano) {

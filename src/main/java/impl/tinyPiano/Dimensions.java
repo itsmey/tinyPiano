@@ -2,7 +2,7 @@ package impl.tinyPiano;
 
 import java.awt.*;
 
-public class Dimensions {
+class Dimensions {
     private static int SCALE = 3;
     static int HEADER = 8 * SCALE;
     static int WIDTH_W = 8 * SCALE;
