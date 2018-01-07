@@ -1,6 +1,8 @@
 package exercise;
 
 import common.Interval;
+import common.L10n;
+import common.Utils;
 import frame.MainFrame;
 import frame.Settings;
 
@@ -108,6 +110,6 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
 
     @Override
     public String toString() {
-        return "Определить более высокую ноту (на слух)";
+        return Utils.getLocalizedText(L10n.PICK_HIGH_EXERCISE);
     }
 }

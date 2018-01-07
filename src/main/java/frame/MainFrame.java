@@ -60,6 +60,7 @@ public class MainFrame extends JFrame implements Settings {
         exercisePanel.setPreferredSize(new Dimension(pianoWidth, EXERCISE_PANEL_HEIGHT));
 
         selectorBox = new JComboBox<>();
+        selectorBox.setPreferredSize(new Dimension(300, 25));
 
         selectButton.addActionListener(e -> {
             stopButton.doClick();
@@ -135,6 +136,7 @@ public class MainFrame extends JFrame implements Settings {
         setTitle(Utils.getLocalizedText(L10n.TITLE));
         configureFrame.applyLocale();
         L10n.processContainer(getContentPane());
+        selectorBox.repaint();
 //        for (int i = 0; i < selectorBox.getItemCount(); i++) {
 //            Exercise exercise = selectorBox.getItemAt(i);
 //        }

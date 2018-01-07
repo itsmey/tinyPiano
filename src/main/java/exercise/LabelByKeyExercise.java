@@ -1,6 +1,8 @@
 package exercise;
 
 import common.Key;
+import common.L10n;
+import common.Utils;
 import frame.MainFrame;
 
 import javax.swing.*;
@@ -70,6 +72,6 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
 
     @Override
     public String toString() {
-        return "Определить обозначение по клавише";
+        return Utils.getLocalizedText(L10n.LABEL_BY_KEY_EXERCISE);
     }
 }

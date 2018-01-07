@@ -2,6 +2,8 @@ package exercise;
 
 import common.Interval;
 import common.Key;
+import common.L10n;
+import common.Utils;
 import frame.MainFrame;
 import piano.PianoKeyListener;
 
@@ -72,6 +74,6 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
 
     @Override
     public String toString() {
-        return "Определение недостающей ноты в интервале";
+        return Utils.getLocalizedText(L10n.KEY_BY_INTERVAL_EXERCISE);
     }
 }

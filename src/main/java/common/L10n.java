@@ -9,6 +9,12 @@ public class L10n {
     public static final String OPTIONS = "main.configuration";
     public static final String TRAIN_INTERVALS = "main.train_intervals";
 
+    public static final String KEY_BY_INTERVAL_EXERCISE = "exercise.key_by_interval";
+    public static final String KEY_BY_LABEL_EXERCISE = "exercise.key_by_label";
+    public static final String LABEL_BY_KEY_EXERCISE = "exercise.label_by_key";
+    public static final String PICK_HIGH_EXERCISE = "exercise.pick_high";
+    public static final String PITCH_EXERCISE = "exercise.pitch";
+
     public static final String LOCALE_SELECT = "label.select_locale";
     public static final String TASK_LABEL = "label.task";
     public static final String SELECT_BUTTON = "button.select";

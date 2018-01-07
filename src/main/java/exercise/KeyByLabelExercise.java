@@ -1,6 +1,8 @@
 package exercise;
 
 import common.Key;
+import common.L10n;
+import common.Utils;
 import frame.MainFrame;
 import piano.PianoKeyListener;
 
@@ -56,6 +58,6 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
 
     @Override
     public String toString() {
-        return "Определить клавишу по обозначению";
+        return Utils.getLocalizedText(L10n.KEY_BY_LABEL_EXERCISE);
     }
 }
