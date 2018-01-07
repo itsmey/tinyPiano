@@ -1,38 +1,54 @@
 package frame;
 
 import common.Interval;
+import common.L10n;
+import common.Utils;
 import exercise.Exercise;
 import piano.Piano;
 
 import javax.swing.*;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.awt.*;
+import java.util.List;
 
 public class MainFrame extends JFrame implements Settings {
     private static final int SELECTOR_PANEL_HEIGHT = 80;
     private static final int EXERCISE_PANEL_HEIGHT = 150;
 
     private Piano piano;
-    private Exercise[] exercises;
     private JPanel selectorPanel = new JPanel();
     private JPanel exercisePanel = new JPanel();
     private JPanel exerciseComponentsPanel = new JPanel();
-    private JLabel taskLabel = new JLabel("Задание не выбрано", JLabel.CENTER);
+    private JLabel taskLabel = new JLabel(Utils.getLocalizedText(L10n.TASK_LABEL), JLabel.CENTER);
     private JLabel statusLabel = new JLabel("", JLabel.CENTER);
     private JLabel messageLabel = new JLabel("", JLabel.CENTER);
     private JComboBox<Exercise> selectorBox;
-    private JButton selectButton = new JButton("Выбрать");
-    private JButton stopButton = new JButton("Остановить");
-    private JButton configureButton = new JButton("Настроить...");
-    private ConfigureFrame configureFrame = new ConfigureFrame();
+    private JButton selectButton = new JButton(Utils.getLocalizedText(L10n.SELECT_BUTTON));
+    private JButton stopButton = new JButton(Utils.getLocalizedText(L10n.STOP_BUTTON));
+    private JButton configureButton = new JButton(Utils.getLocalizedText(L10n.CONFIGURE_BUTTON));
+    private ConfigureFrame configureFrame;
 
     private Exercise exercise;
 
+    private static final Map<String, Locale> locales = new HashMap<>();
+
+    static {
+        Locale.setDefault(new Locale("en", "US"));
+        locales.put("English", new Locale("en", "US"));
+        locales.put("Русский", new Locale("ru", "RU"));
+    }
+
     public MainFrame(Piano piano) {
-        super("TinyPiano");
+        super(Utils.getLocalizedText(L10n.TITLE));
 
         this.piano = piano;
+
+        taskLabel.putClientProperty(L10n.KEY, L10n.TASK_LABEL);
+        selectButton.putClientProperty(L10n.KEY, L10n.SELECT_BUTTON);
+        stopButton.putClientProperty(L10n.KEY, L10n.STOP_BUTTON);
+        configureButton.putClientProperty(L10n.KEY, L10n.CONFIGURE_BUTTON);
+
+        configureFrame = new ConfigureFrame(locales, this::applyLocale);
 
         int pianoWidth = piano.getPanel().getPreferredSize().width;
 
@@ -44,16 +60,14 @@ public class MainFrame extends JFrame implements Settings {
         exercisePanel.setPreferredSize(new Dimension(pianoWidth, EXERCISE_PANEL_HEIGHT));
 
         selectorBox = new JComboBox<>();
-        selectorBox.addActionListener(e -> {
-            if (selectorBox.getSelectedItem() != null)
-                configureButton.setEnabled(((Exercise) selectorBox.getSelectedItem()).isConfigurable());
-        });
+
         selectButton.addActionListener(e -> {
             stopButton.doClick();
             if (selectorBox.getSelectedItem() != null) {
                 exercise = (Exercise)selectorBox.getSelectedItem();
                 exercise.start();
             }
+            configureButton.setEnabled(false);
         });
         stopButton.addActionListener(e -> {
             if (exercise != null) {
@@ -62,8 +76,9 @@ public class MainFrame extends JFrame implements Settings {
             }
             statusLabel.setText("");
             messageLabel.setText("");
-            taskLabel.setText("Задание не выбрано");
+            taskLabel.setText(Utils.getLocalizedText(L10n.TASK_LABEL));
             piano.setHighlighted(new HashSet<>());
+            configureButton.setEnabled(true);
         });
         configureButton.addActionListener(e -> configureFrame.setVisible(true));
 
@@ -114,6 +129,15 @@ public class MainFrame extends JFrame implements Settings {
         else
             exerciseComponentsPanel.remove(component);
         repaint();
+    }
+
+    private void applyLocale() {
+        setTitle(Utils.getLocalizedText(L10n.TITLE));
+        configureFrame.applyLocale();
+        L10n.processContainer(getContentPane());
+//        for (int i = 0; i < selectorBox.getItemCount(); i++) {
+//            Exercise exercise = selectorBox.getItemAt(i);
+//        }
     }
 
     @Override

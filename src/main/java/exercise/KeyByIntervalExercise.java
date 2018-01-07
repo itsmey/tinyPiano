@@ -71,11 +71,6 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
     }
 
     @Override
-    public boolean isConfigurable() {
-        return true;
-    }
-
-    @Override
     public String toString() {
         return "Определение недостающей ноты в интервале";
     }

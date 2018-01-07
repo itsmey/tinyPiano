@@ -23,8 +23,4 @@ abstract class AbstractExercise {
 
         stats = new Stats();
     }
-
-    public boolean isConfigurable() {
-        return false;
-    }
 }

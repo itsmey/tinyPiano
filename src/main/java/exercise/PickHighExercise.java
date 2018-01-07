@@ -107,11 +107,6 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
     }
 
     @Override
-    public boolean isConfigurable() {
-        return true;
-    }
-
-    @Override
     public String toString() {
         return "Определить более высокую ноту (на слух)";
     }
