@@ -1,5 +1,8 @@
 package exercise;
 
+import common.L10n;
+import common.Utils;
+
 public class Stats {
     private int total;
     private int correct;
@@ -33,7 +36,6 @@ public class Stats {
 
     @Override
     public String toString() {
-        return String.format("Правильных: %d, ошибок: %d, процент правильных: %d",
-                correct, total - correct, getPercentage());
+        return L10n.construct(Utils.getLocalizedText(L10n.STATS), correct, total - correct, getPercentage());
     }
 }

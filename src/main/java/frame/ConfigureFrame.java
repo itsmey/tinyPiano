@@ -38,8 +38,8 @@ class ConfigureFrame extends JFrame {
 
         int i = 0;
         for (Interval interval : Interval.getAll()) {
-            String cp = L10n.INTERVAL_CHECKBOXES[i];
-            JCheckBox checkBox = new JCheckBox(Utils.getLocalizedText(cp));
+            String cp = L10n.INTERVALS.get(i);
+            JCheckBox checkBox = new JCheckBox(Utils.getLocalizedText(cp) + "(" + i + ")");
             checkBox.putClientProperty(L10n.KEY, cp);
             checkBox.setSelected(true);
             intervalBinding.put(interval, checkBox);

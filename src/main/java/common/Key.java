@@ -167,42 +167,8 @@ public class Key implements Comparable<Key>{
 
     public static String title(String keyString) {
         Key key = fromString(keyString);
-
-        String text = "";
-
-        switch (key.note) {
-            case "C": text += "до "; break;
-            case "D": text += "ре "; break;
-            case "F": text += "фа "; break;
-            case "G": text += "соль "; break;
-            case "A": text += "ля "; break;
-            case "E": text += "ми "; break;
-            case "B": text += "си "; break;
-            case "C#": text += "до-диез "; break;
-            case "D#": text += "ре-диез "; break;
-            case "F#": text += "фа-диез "; break;
-            case "G#": text += "соль-диез "; break;
-            case "A#": text += "ля-диез "; break;
-            case "Db": text += "ре-бемоль "; break;
-            case "Eb": text += "ми-бемоль "; break;
-            case "Gb": text += "соль-бемоль "; break;
-            case "Ab": text += "ля-бемоль "; break;
-            case "Bb": text += "си-бемоль "; break;
-        }
-
-        switch (key.octave) {
-            case 0: text += "субконтроктавы "; break;
-            case 1: text += "контроктавы "; break;
-            case 2: text += "большой октавы "; break;
-            case 3: text += "малой октавы "; break;
-            case 4: text += "первой октавы "; break;
-            case 5: text += "второй октавы "; break;
-            case 6: text += "третьей октавы "; break;
-            case 7: text += "четвертой октавы "; break;
-            case 8: text += "пятой октавы "; break;
-        }
-
-        return text + "(" + keyString + ")";
+        return String.format("%s (%s)", Utils.getLocalizedText(L10n.NOTES.get(key.note)),
+                Utils.getLocalizedText(L10n.OCTAVES.get(key.octave)));
     }
 
     @Override

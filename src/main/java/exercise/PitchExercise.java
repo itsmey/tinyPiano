@@ -13,8 +13,8 @@ public class PitchExercise extends AbstractExercise implements Exercise {
     private static final Logger logger = Logger.getLogger(PitchExercise.class.getName());
     private String keyToGuess;
     private String lastKey;
-    private JButton repeatButton = new JButton("Звук");
-    private JButton nextButton = new JButton("Следующий");
+    private JButton repeatButton = new JButton(Utils.getLocalizedText(L10n.PLAY_BUTTON));
+    private JButton nextButton = new JButton(Utils.getLocalizedText(L10n.NEXT_BUTTON));
 
     private final PianoKeyListener LISTENER = new PianoKeyListener() {
         @Override
@@ -23,11 +23,11 @@ public class PitchExercise extends AbstractExercise implements Exercise {
                 return;
             if (key.equals(keyToGuess)) {
                 stats.correct();
-                messageLabel.setText("Правильно!");
+                messageLabel.setText(Utils.getLocalizedText(L10n.CORRECT));
             } else {
                 stats.mistake();
                 int difference = Key.distance(keyToGuess, key);
-                messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
+                messageLabel.setText(L10n.construct(Utils.getLocalizedText(L10n.YOU_ARE_MISTAKEN), Math.abs(difference)));
             }
             statusLabel.setText(stats.toString());
             nextButton.setEnabled(true);
@@ -51,9 +51,11 @@ public class PitchExercise extends AbstractExercise implements Exercise {
         piano.setShowKeyLabels(false);
         piano.addKeyListener(LISTENER);
         next();
-        taskLabel.setText("Задание: определите клавишу");
+        taskLabel.setText(Utils.getLocalizedText(L10n.IDENTIFY_KEY));
         statusLabel.setText("");
         messageLabel.setText("");
+        nextButton.setText(Utils.getLocalizedText(L10n.NEXT_BUTTON));
+        repeatButton.setText(Utils.getLocalizedText(L10n.PLAY_BUTTON));
         frame.addExerciseComponent(repeatButton, true);
         frame.addExerciseComponent(nextButton, true);
     }

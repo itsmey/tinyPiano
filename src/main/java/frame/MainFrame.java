@@ -137,9 +137,6 @@ public class MainFrame extends JFrame implements Settings {
         configureFrame.applyLocale();
         L10n.processContainer(getContentPane());
         selectorBox.repaint();
-//        for (int i = 0; i < selectorBox.getItemCount(); i++) {
-//            Exercise exercise = selectorBox.getItemAt(i);
-//        }
     }
 
     @Override

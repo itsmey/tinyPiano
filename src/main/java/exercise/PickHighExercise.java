@@ -15,9 +15,9 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
     private static final Logger logger = Logger.getLogger(PickHighExercise.class.getName());
     private JButton pickAButton = new JButton(" А ");
     private JButton pickBButton = new JButton(" B ");
-    private JButton playAButton = new JButton("Играть А");
-    private JButton playBButton = new JButton("Играть В");
-    private JButton nextButton = new JButton("Следующий");
+    private JButton playAButton = new JButton(Utils.getLocalizedText(L10n.PLAY) + " А");
+    private JButton playBButton = new JButton(Utils.getLocalizedText(L10n.PLAY) + " В");
+    private JButton nextButton = new JButton(Utils.getLocalizedText(L10n.NEXT_BUTTON));
 
     private String keyA;
     private String keyB;
@@ -25,7 +25,7 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
     
     PickHighExercise(MainFrame frame) {
         super(frame);
-        
+
         pickAButton.addActionListener(e -> answer(keyA));
         pickBButton.addActionListener(e -> answer(keyB));
         playAButton.addActionListener(e -> piano.play(keyA));
@@ -38,20 +38,21 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
     private void answer(String key) {
         if (key.equals(higherKey)) {
             stats.correct();
-            messageLabel.setText("Правильно!");
+            messageLabel.setText(Utils.getLocalizedText(L10n.CORRECT));
         } else {
             stats.mistake();
-            messageLabel.setText("Ошибка!");
+            messageLabel.setText(Utils.getLocalizedText(L10n.MISTAKE));
         }
         statusLabel.setText(stats.toString());
         pickAButton.setText(keyA);
         pickBButton.setText(keyB);
         pickAButton.setEnabled(false);
         pickBButton.setEnabled(false);
-        playAButton.setText("Играть " + keyA);
-        playBButton.setText("Играть " + keyB);
+        playAButton.setText(Utils.getLocalizedText(L10n.PLAY) + " " + keyA);
+        playBButton.setText(Utils.getLocalizedText(L10n.PLAY) + " " + keyB);
         pickBButton.setText(keyB);
         nextButton.setEnabled(true);
+        nextButton.setText(Utils.getLocalizedText(L10n.NEXT_BUTTON));
         piano.highlight(keyA, "A");
         piano.highlight(keyB, "B");
     }
@@ -60,7 +61,7 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
     public void start() {
         stats = new Stats();
         piano.setShowKeyLabels(false);
-        taskLabel.setText("Задание: определите более высокую ноту");
+        taskLabel.setText(Utils.getLocalizedText(L10n.PICK_HIGH));
         statusLabel.setText("");
         messageLabel.setText("");
         frame.addExerciseComponent(playAButton, true);
@@ -91,8 +92,8 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
         pickBButton.setText(" B ");
         pickAButton.setEnabled(true);
         pickBButton.setEnabled(true);
-        playAButton.setText("Играть А");
-        playBButton.setText("Играть В");
+        playAButton.setText(Utils.getLocalizedText(L10n.PLAY) + " А");
+        playBButton.setText(Utils.getLocalizedText(L10n.PLAY) + " В");
         nextButton.setEnabled(false);
         Interval interval = Interval.randomButNotUnison(piano, frame.getIntervalsList());
         if (new Random().nextBoolean()) {

@@ -19,11 +19,11 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
         public void onKeyPressed(String key) {
             if (key.equals(keyToGuess)) {
                 stats.correct();
-                messageLabel.setText("Правильно!");
+                messageLabel.setText(Utils.getLocalizedText(L10n.CORRECT));
             } else {
                 stats.mistake();
                 int difference = Key.distance(keyToGuess, key);
-                messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
+                messageLabel.setText(L10n.construct(Utils.getLocalizedText(L10n.YOU_ARE_MISTAKEN), Math.abs(difference)));
             }
             statusLabel.setText(stats.toString());
             next();
@@ -59,15 +59,15 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
         if (new Random().nextBoolean()) {
             baseKey = interval.getHigherKey();
             keyToGuess = interval.getLowerKey();
-            higherOrLower = "ниже";
+            higherOrLower = Utils.getLocalizedText(L10n.LOWER);
         } else {
             baseKey = interval.getLowerKey();
             keyToGuess = interval.getHigherKey();
-            higherOrLower = "выше";
+            higherOrLower = Utils.getLocalizedText(L10n.HIGHER);
         }
 
-        taskLabel.setText("Задание: сыграйте ноту, которая " + higherOrLower + " ноты " +
-                Key.title(baseKey) + " на " + interval.title() + " (" + Math.abs(interval.distance()) + " полутонов)");
+        taskLabel.setText(L10n.construct(Utils.getLocalizedText(L10n.PLAY_NOTE_WHICH),
+                higherOrLower, Key.title(baseKey), interval.title(), Math.abs(interval.distance())));
 
         logger.info("next: base key - " + baseKey + ", key to guess - " + keyToGuess + ", interval - " + interval);
     }

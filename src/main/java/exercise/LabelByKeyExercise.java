@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class LabelByKeyExercise extends AbstractExercise implements Exercise {
     private static final Logger logger = Logger.getLogger(LabelByKeyExercise.class.getName());
     private String keyToGuess;
-    private JButton answerButton = new JButton("Ответить");
+    private JButton answerButton = new JButton(Utils.getLocalizedText(L10n.ANSWER_BUTTON));
     private JTextField answerField = new JTextField(4);
 
     LabelByKeyExercise(MainFrame frame) {
@@ -23,15 +23,15 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
                 logger.info("checking answer. normalized answer - " + answer + ", right answer - " + keyToGuess);
                 if (answer.equals(Key.normalize(keyToGuess))) {
                     stats.correct();
-                    messageLabel.setText("Правильно!");
+                    messageLabel.setText(Utils.getLocalizedText(L10n.CORRECT));
                 } else {
                     stats.mistake();
                     int difference = Key.distance(keyToGuess, answer);
-                    messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
+                    messageLabel.setText(L10n.construct(Utils.getLocalizedText(L10n.YOU_ARE_MISTAKEN), Math.abs(difference)));
                 }
             } else {
                 stats.mistake();
-                messageLabel.setText("Введенное не является обозначением клавиши!");
+                messageLabel.setText(Utils.getLocalizedText(L10n.NOT_A_KEY));
             }
             statusLabel.setText(stats.toString());
             next();
@@ -45,10 +45,11 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
         stats = new Stats();
         piano.setShowKeyLabels(false);
         next();
-        taskLabel.setText("Задание: напишите обозначение выделенной клавиши");
+        taskLabel.setText(Utils.getLocalizedText(L10n.ENTER_KEY_SYMBOL));
         statusLabel.setText("");
         messageLabel.setText("");
         answerField.setText("");
+        answerButton.setText(Utils.getLocalizedText(L10n.ANSWER_BUTTON));
         frame.addExerciseComponent(answerField, true);
         frame.addExerciseComponent(answerButton, true);
     }

@@ -17,11 +17,11 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
         public void onKeyPressed(String key) {
             if (key.equals(keyToGuess)) {
                 stats.correct();
-                messageLabel.setText("Правильно!");
+                messageLabel.setText(Utils.getLocalizedText(L10n.CORRECT));
             } else {
                 stats.mistake();
                 int difference = Key.distance(keyToGuess, key);
-                messageLabel.setText("Вы ошиблись на " + Math.abs(difference) + " полутонов");
+                messageLabel.setText(L10n.construct(Utils.getLocalizedText(L10n.YOU_ARE_MISTAKEN), Math.abs(difference)));
             }
             statusLabel.setText(stats.toString());
             next();
@@ -52,7 +52,7 @@ public class KeyByLabelExercise extends AbstractExercise implements Exercise {
     @Override
     public void next() {
         keyToGuess = Key.random(piano);
-        taskLabel.setText("Задание: нажмите клавишу " + Key.title(keyToGuess));
+        taskLabel.setText(L10n.construct(Utils.getLocalizedText(L10n.PLAY_NOTE), Key.title(keyToGuess)));
         logger.info("next: " + keyToGuess);
     }
 
