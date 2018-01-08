@@ -69,7 +69,9 @@ public class MainFrame extends JFrame implements Settings {
                 exercise.start();
             }
             configureButton.setEnabled(false);
+            stopButton.setEnabled(true);
         });
+        stopButton.setEnabled(false);
         stopButton.addActionListener(e -> {
             if (exercise != null) {
                 exercise.stop();
@@ -80,6 +82,7 @@ public class MainFrame extends JFrame implements Settings {
             taskLabel.setText(Utils.getLocalizedText(L10n.TASK_LABEL));
             piano.setHighlighted(new HashSet<>());
             configureButton.setEnabled(true);
+            stopButton.setEnabled(false);
         });
         configureButton.addActionListener(e -> configureFrame.setVisible(true));
 
