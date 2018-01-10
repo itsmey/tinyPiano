@@ -1,5 +1,7 @@
 package piano;
 
+import common.Chord;
+
 import javax.swing.*;
 import java.util.Set;
 
@@ -17,4 +19,5 @@ public interface Piano {
     void cancelHighlight(String key);
     void setHighlighted(Set<String> keys);
     void play(String key);
+    void playChord(Chord chord);
 }

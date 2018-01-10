@@ -1,5 +1,6 @@
 package impl.tinyPiano;
 
+import common.Chord;
 import common.Key;
 import piano.AudioSource;
 import piano.Piano;
@@ -58,6 +59,11 @@ public class TinyPiano implements Piano {
     @Override
     public void play(String key) {
         audioSource.playKey(key);
+    }
+
+    @Override
+    public void playChord(Chord chord) {
+        audioSource.playChord(chord);
     }
 
     private String getActualKey(char ch) {

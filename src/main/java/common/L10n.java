@@ -19,6 +19,7 @@ public class L10n {
     public static final String LABEL_BY_KEY_EXERCISE = "exercise.label_by_key";
     public static final String PICK_HIGH_EXERCISE = "exercise.pick_high";
     public static final String PITCH_EXERCISE = "exercise.pitch";
+    public static final String CHORD_EXERCISE = "exercise.chord";
 
     public static final String LOCALE_SELECT = "label.select_locale";
     public static final String TASK_LABEL = "label.task";
@@ -99,6 +100,7 @@ public class L10n {
     public static final String ENTER_KEY_SYMBOL = "dynamic.enter_key_symbol";
     public static final String PICK_HIGH = "dynamic.pick_high";
     public static final String IDENTIFY_KEY = "dynamic.identify_key";
+    public static final String IDENTIFY_CHORD = "dynamic.identify_chord";
     public static final String MISTAKE = "dynamic.mistake";
     public static final String NOT_A_KEY = "dynamic.not_a_key";
     public static final String PLAY = "dynamic.play";

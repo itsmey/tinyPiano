@@ -35,6 +35,10 @@ public class Key implements Comparable<Key>{
         return new Key(key);
     }
 
+    public static String getNote(String keyString) {
+        return fromString(keyString).normalize().note;
+    }
+
     public static boolean validate(String keyString) {
         try {
             fromString(keyString);

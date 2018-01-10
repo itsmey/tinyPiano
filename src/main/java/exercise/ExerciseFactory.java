@@ -18,4 +18,7 @@ public class ExerciseFactory {
     public static Exercise createPickHighExercise(MainFrame frame) {
         return new PickHighExercise(frame);
     }
+    public static Exercise createChordExercise(MainFrame frame) {
+        return new ChordExercise(frame);
+    }
 }

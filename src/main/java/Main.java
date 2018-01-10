@@ -12,6 +12,7 @@ public class Main {
         ExerciseFactory.createPitchExcercise(frame);
         ExerciseFactory.createKeyByIntervalExercise(frame);
         ExerciseFactory.createPickHighExercise(frame);
+        ExerciseFactory.createChordExercise(frame);
         frame.setVisible(true);
     }
 }
