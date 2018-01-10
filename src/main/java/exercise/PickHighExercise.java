@@ -7,6 +7,9 @@ import frame.MainFrame;
 import frame.Settings;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -22,6 +25,8 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
     private String keyA;
     private String keyB;
     private String higherKey;
+
+    private Timer timer;
     
     PickHighExercise(MainFrame frame) {
         super(frame);
@@ -36,12 +41,10 @@ public class PickHighExercise extends AbstractExercise implements Exercise {
     }
 
     private void answer(String key) {
-        if (key.equals(higherKey)) {
-            stats.correct();
-            messageLabel.setText(Utils.getLocalizedText(L10n.CORRECT));
+        if ((key.equals(higherKey))) {
+            correct();
         } else {
-            stats.mistake();
-            messageLabel.setText(Utils.getLocalizedText(L10n.MISTAKE));
+            incorrect();
         }
         statusLabel.setText(stats.toString());
         pickAButton.setText(keyA);

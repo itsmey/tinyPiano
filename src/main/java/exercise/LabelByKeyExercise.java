@@ -22,12 +22,10 @@ public class LabelByKeyExercise extends AbstractExercise implements Exercise {
                 String answer = Key.normalize(answerField.getText().toUpperCase());
                 logger.info("checking answer. normalized answer - " + answer + ", right answer - " + keyToGuess);
                 if (answer.equals(Key.normalize(keyToGuess))) {
-                    stats.correct();
-                    messageLabel.setText(Utils.getLocalizedText(L10n.CORRECT));
+                    correct();
                 } else {
-                    stats.mistake();
                     int difference = Key.distance(keyToGuess, answer);
-                    messageLabel.setText(L10n.construct(Utils.getLocalizedText(L10n.YOU_ARE_MISTAKEN), Math.abs(difference)));
+                    incorrect(L10n.construct(Utils.getLocalizedText(L10n.YOU_ARE_MISTAKEN), Math.abs(difference)));
                 }
             } else {
                 stats.mistake();

@@ -18,12 +18,10 @@ public class KeyByIntervalExercise extends AbstractExercise implements Exercise 
         @Override
         public void onKeyPressed(String key) {
             if (key.equals(keyToGuess)) {
-                stats.correct();
-                messageLabel.setText(Utils.getLocalizedText(L10n.CORRECT));
+                correct();
             } else {
-                stats.mistake();
                 int difference = Key.distance(keyToGuess, key);
-                messageLabel.setText(L10n.construct(Utils.getLocalizedText(L10n.YOU_ARE_MISTAKEN), Math.abs(difference)));
+                incorrect(L10n.construct(Utils.getLocalizedText(L10n.YOU_ARE_MISTAKEN), Math.abs(difference)));
             }
             statusLabel.setText(stats.toString());
             next();
