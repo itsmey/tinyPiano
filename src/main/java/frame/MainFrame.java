@@ -7,11 +7,16 @@ import exercise.Exercise;
 import piano.Piano;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
 import java.awt.*;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MainFrame extends JFrame implements Settings {
+    private static final Logger logger = Logger.getLogger(MainFrame.class.getName());
+
     private static final int SELECTOR_PANEL_HEIGHT = 80;
     private static final int EXERCISE_PANEL_HEIGHT = 150;
 
@@ -105,6 +110,9 @@ public class MainFrame extends JFrame implements Settings {
         pack();
 
         setResizable(false);
+
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new CustomKeyEventDispatcher());
     }
 
     public Piano getPiano() {
@@ -145,5 +153,25 @@ public class MainFrame extends JFrame implements Settings {
     @Override
     public List<Interval> getIntervalsList() {
         return configureFrame.getIntervalsList();
+    }
+
+    public void keyPressed(KeyEvent e) {
+        logger.info("keyPressed " + e.getKeyChar() + " " + e.getKeyCode());
+    }
+
+    public void keyReleased(KeyEvent e) {
+        logger.info("keyReleased " + e.getKeyChar() + " " + e.getKeyCode());
+    }
+
+    private class CustomKeyEventDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
+                keyPressed(e);
+            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+                keyReleased(e);
+            }
+            return false;
+        }
     }
 }
