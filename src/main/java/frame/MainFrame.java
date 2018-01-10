@@ -7,10 +7,6 @@ import exercise.Exercise;
 import piano.Piano;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.*;
 import java.awt.*;
 import java.util.List;
@@ -123,27 +119,6 @@ public class MainFrame extends JFrame implements Settings {
         pack();
 
         setResizable(false);
-
-
-//        piano.getPanel().addKeyListener(new KeyListener() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                logger.info("pressed");
-//            }
-//
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//
-//            }
-//        });
-//        piano.getPanel().setFocusable(true);
-//        piano.getPanel().requestFocusInWindow();
-
     }
 
     public Piano getPiano() {
