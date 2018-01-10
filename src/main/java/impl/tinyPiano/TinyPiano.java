@@ -140,16 +140,14 @@ public class TinyPiano implements Piano {
         }
     }
 
-    private void keyPressed(KeyEvent e) {
-        String key = getActualKey(e.getKeyChar());
+    private void keyPressed(String key) {
         if (key != null && !isHighlighted(key)) {
             highlight(key);
             notifyListeners(key);
         }
     }
 
-    private void keyReleased(KeyEvent e) {
-        String key = getActualKey(e.getKeyChar());
+    private void keyReleased(String key) {
         if (key != null && isHighlighted(key)) {
             cancelHighlight(key);
         }
@@ -158,10 +156,11 @@ public class TinyPiano implements Piano {
     private class CustomKeyEventDispatcher implements KeyEventDispatcher {
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
+            String key = getActualKey(e.getKeyChar());
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-                keyPressed(e);
+                keyPressed(key);
             } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-                keyReleased(e);
+                keyReleased(key);
             }
             return false;
         }
