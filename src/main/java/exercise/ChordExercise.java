@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.zip.CheckedOutputStream;
 
 public class ChordExercise extends AbstractExercise implements Exercise {
     private static final Logger logger = Logger.getLogger(ChordExercise.class.getName());
@@ -90,15 +91,19 @@ public class ChordExercise extends AbstractExercise implements Exercise {
     @Override
     public void next() {
         nextButton.setEnabled(false);
-        chordToGuess = Chord.random(piano, false);
+        chordToGuess = Chord.random(piano, frame.getChordTypesList(), frame.areInversionsAllowed());
         piano.playChord(chordToGuess);
         logger.info("next: " + chordToGuess);
         List<Chord> incorrectVariants = createIncorrectVariants(chordToGuess);
-        for(int i = 0; i < N_VARIANTS; i++) {
+        for(int i = 0; i < N_VARIANTS - 1; i++) {
             variantButtons[i].putClientProperty(KEY, incorrectVariants.get(i));
             variantButtons[i].setText(incorrectVariants.get(i).toString());
         }
         int r = new Random().nextInt(N_VARIANTS);
+        if (r != N_VARIANTS - 1) {
+            variantButtons[N_VARIANTS - 1].putClientProperty(KEY, variantButtons[r].getClientProperty(KEY));
+            variantButtons[N_VARIANTS - 1].setText(variantButtons[r].getText());
+        }
         variantButtons[r].putClientProperty(KEY, chordToGuess);
         variantButtons[r].setText(chordToGuess.toString());
         cancelButtonHighlighting();
@@ -106,10 +111,10 @@ public class ChordExercise extends AbstractExercise implements Exercise {
     }
 
     private List<Chord> createIncorrectVariants(Chord correctVariant) {
-        List<Chord.ChordType> types = new LinkedList<>(Arrays.asList(Chord.ChordType.values()));
+        List<Chord.ChordType> types = new LinkedList<>(frame.getChordTypesList());
         List<Chord> result = new ArrayList<>();
         types.remove(correctVariant.getType());
-        for (int i = 0; i < N_VARIANTS; i++) {
+        for (int i = 0; i < N_VARIANTS - 1; i++) {
             Chord.ChordType type = types.get(new Random().nextInt(types.size()));
             types.remove(type);
             result.add(new Chord(correctVariant.getRoot(), type, 0));

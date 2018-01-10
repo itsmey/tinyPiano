@@ -13,6 +13,7 @@ public class L10n {
     public static final String TITLE = "main.title";
     public static final String OPTIONS = "main.configuration";
     public static final String TRAIN_INTERVALS = "main.train_intervals";
+    public static final String TRAIN_CHORDS = "main.train_chords";
 
     public static final String KEY_BY_INTERVAL_EXERCISE = "exercise.key_by_interval";
     public static final String KEY_BY_LABEL_EXERCISE = "exercise.key_by_label";
@@ -30,6 +31,7 @@ public class L10n {
     public static final String PLAY_BUTTON = "button.play";
     public static final String NEXT_BUTTON = "button.next";
     public static final String KEY_ASSIST_CHECKBOX = "checkbox.key_assist";
+    public static final String INVERSIONS_ALLOWED = "checkbox.inversions_allowed";
 
     private static final String UNISON = "interval.unison";
     private static final String MINOR_SECOND = "interval.minor_second";
@@ -47,6 +49,8 @@ public class L10n {
 
     private static final Map<String, String> notes = new HashMap<>();
     public static Map<String, String> NOTES = null;
+    private static final Map<Chord.ChordType, String> chords = new HashMap<>();
+    public static Map<Chord.ChordType, String> CHORDS = null;
 
     static {
         notes.put("C", "note.c");
@@ -67,6 +71,10 @@ public class L10n {
         notes.put("B", "note.b");
         notes.put("Bb", "note.b_flat");
         NOTES = Collections.unmodifiableMap(notes);
+        for(Chord.ChordType ct : Chord.ChordType.values()) {
+            chords.put(ct, "chord." + ct.getSymbol());
+        }
+        CHORDS = Collections.unmodifiableMap(chords);
     }
 
     private static final String[] octaves = {

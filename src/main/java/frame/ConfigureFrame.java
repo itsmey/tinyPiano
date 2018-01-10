@@ -1,5 +1,6 @@
 package frame;
 
+import common.Chord;
 import common.Interval;
 import common.L10n;
 import common.Utils;
@@ -11,8 +12,11 @@ import java.util.List;
 
 class ConfigureFrame extends JFrame {
     private Map<Interval, JCheckBox> intervalBinding = new HashMap<>();
+    private Map<Chord.ChordType, JCheckBox> chordTypesBinding = new HashMap<>();
     private JLabel localeLabel = new JLabel(Utils.getLocalizedText(L10n.LOCALE_SELECT) + ": ");
     private JPanel intervalsPanel = new JPanel();
+    private JPanel chordTypePanel = new JPanel();
+    private JCheckBox areInversionsAllowedCheckBox = new JCheckBox(Utils.getLocalizedText(L10n.INVERSIONS_ALLOWED));
 
     ConfigureFrame(Map<String, Locale> locales, Runnable applier) {
         super(Utils.getLocalizedText(L10n.OPTIONS));
@@ -32,9 +36,11 @@ class ConfigureFrame extends JFrame {
         });
         localePanel.add(localesBox);
 
-        localePanel.setPreferredSize(new Dimension(100, 200));
-        intervalsPanel.setPreferredSize(new Dimension(400, 200));
+        localePanel.setPreferredSize(new Dimension(200, 80));
+        intervalsPanel.setPreferredSize(new Dimension(300, 200));
         intervalsPanel.setBorder(BorderFactory.createTitledBorder(Utils.getLocalizedText(L10n.TRAIN_INTERVALS)));
+        chordTypePanel.setPreferredSize(new Dimension(500, 200));
+        chordTypePanel.setBorder(BorderFactory.createTitledBorder(Utils.getLocalizedText(L10n.TRAIN_CHORDS)));
 
         int i = 0;
         for (Interval interval : Interval.getAll()) {
@@ -46,9 +52,23 @@ class ConfigureFrame extends JFrame {
             intervalsPanel.add(checkBox);
             i++;
         }
+        for (Chord.ChordType chordType : Chord.ChordType.values()) {
+            String cp = L10n.CHORDS.get(chordType);
+            JCheckBox checkBox = new JCheckBox(Utils.getLocalizedText(cp) + "(" + chordType.getSymbol() + ")");
+            checkBox.putClientProperty(L10n.KEY, cp);
+            checkBox.setSelected(true);
+            chordTypesBinding.put(chordType, checkBox);
+            chordTypePanel.add(checkBox);
+        }
+        areInversionsAllowedCheckBox.putClientProperty(L10n.KEY, L10n.INVERSIONS_ALLOWED);
+        areInversionsAllowedCheckBox.setSelected(true);
+        chordTypePanel.add(areInversionsAllowedCheckBox);
 
         add(localePanel, BorderLayout.PAGE_START);
         add(intervalsPanel, BorderLayout.CENTER);
+        add(chordTypePanel, BorderLayout.PAGE_END);
+
+        setResizable(false);
 
         pack();
     }
@@ -62,9 +82,23 @@ class ConfigureFrame extends JFrame {
         return list;
     }
 
+    List<Chord.ChordType> getChordTypesList() {
+        List<Chord.ChordType> list = new ArrayList<>();
+        for (Map.Entry<Chord.ChordType, JCheckBox> e : chordTypesBinding.entrySet()) {
+            if (e.getValue().isSelected())
+                list.add(e.getKey());
+        }
+        return list;
+    }
+
+    boolean areInversionsAllowed() {
+        return areInversionsAllowedCheckBox.isSelected();
+    }
+
     void applyLocale() {
         setTitle(Utils.getLocalizedText(L10n.OPTIONS));
         intervalsPanel.setBorder(BorderFactory.createTitledBorder(Utils.getLocalizedText(L10n.TRAIN_INTERVALS)));
+        chordTypePanel.setBorder(BorderFactory.createTitledBorder(Utils.getLocalizedText(L10n.TRAIN_CHORDS)));
         L10n.processContainer(getContentPane());
     }
 }

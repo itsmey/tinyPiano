@@ -3,8 +3,11 @@ package common;
 import piano.Piano;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Chord {
+    private static final Logger logger = Logger.getLogger(Chord.class.getName());
+
     public enum ChordType {
         MAJOR("maj", 0, 4, 7),
         MINOR("min", 0, 3, 7),
@@ -14,7 +17,9 @@ public class Chord {
         MAJOR_7TH("maj7", 0, 4, 7, 11),
         MINOR_7TH("min7", 0, 3, 7, 10),
         SUSPENDED_4TH("sus4", 0, 5, 7),
-        SUSPENDED_2TH("sus2", 0, 2, 7);
+        SUSPENDED_2TH("sus2", 0, 2, 7),
+        MAJOR_6TH("maj6", 0, 4, 7, 8),
+        MINOR_6TH("min6", 0, 3, 7, 9);
 
         private String symbol;
         private int[] intervals;

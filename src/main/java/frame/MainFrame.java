@@ -1,5 +1,6 @@
 package frame;
 
+import common.Chord;
 import common.Interval;
 import common.L10n;
 import common.Utils;
@@ -161,5 +162,13 @@ public class MainFrame extends JFrame implements Settings {
         return configureFrame.getIntervalsList();
     }
 
+    @Override
+    public List<Chord.ChordType> getChordTypesList() {
+        return configureFrame.getChordTypesList();
+    }
 
+    @Override
+    public boolean areInversionsAllowed() {
+        return configureFrame.areInversionsAllowed();
+    }
 }
