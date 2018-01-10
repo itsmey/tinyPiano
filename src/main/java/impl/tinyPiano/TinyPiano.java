@@ -109,13 +109,11 @@ public class TinyPiano implements Piano {
     @Override
     public void setShowKeyLabels(boolean show) {
         panel.showLabels(show);
-        panel.paintComponent(panel.getGraphics());
     }
 
     @Override
     public void setShowKeyAssist(boolean show) {
         panel.showKeyAssist(show);
-        panel.paintComponent(panel.getGraphics());
     }
 
     private boolean isHighlighted(String key) {

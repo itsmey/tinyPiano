@@ -4,6 +4,7 @@ import common.Key;
 import common.Utils;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.logging.Logger;
 
 class TinyPianoPanel extends JPanel {
     private static final Logger logger = Logger.getLogger(TinyPianoPanel.class.getName());
+
+    private static int REPAINT_DELAY = 50;
+
     private Map<String, Rectangle> blackKeys;
     private Map<String, Rectangle> whiteKeys;
     private boolean canShowLabels = true;
@@ -43,6 +47,8 @@ class TinyPianoPanel extends JPanel {
         }
         setPreferredSize(new Dimension(x, Dimensions.HEIGHT_W + Dimensions.HEADER));
         setDoubleBuffered(true);
+        Timer t = new Timer(REPAINT_DELAY, e -> repaint());
+        t.start();
     }
 
     @Override
@@ -139,33 +145,21 @@ class TinyPianoPanel extends JPanel {
         g.drawChars(chars, offset, length, x + (Dimensions.WIDTH_B - width) / 2, y - Dimensions.LABEL_MARGIN);
     }
 
-//    private void drawKeyAssistForWhiteKey(Character ch, int x, int y, Graphics g) {
-//        char[] chars = {ch};
-//        int offset = 0;
-//        int length = chars.length;
-//        int width = g.getFontMetrics().charsWidth(chars, offset, length);
-//        g.drawChars(chars, offset, length, x + (Dimensions.WIDTH_W - width) / 2, y + Dimensions.HEIGHT_W - Dimensions.LABEL_MARGIN);
-//    }
-
     void highlight(String key) {
         highlighted.add(Key.normalize(key));
-        paintComponent(getGraphics());
     }
 
     void highlight(String key, String text) {
         highlightedWithText.put(Key.normalize(key), text);
-        paintComponent(getGraphics());
     }
 
     void cancelHighlight(String key) {
         highlighted.remove(Key.normalize(key));
         highlightedWithText.remove(Key.normalize(key));
-        paintComponent(getGraphics());
     }
 
     void setHighlighted(Set<String> keys) {
         highlighted = keys;
-        paintComponent(getGraphics());
     }
 
     boolean isHighlighted(String key) {
