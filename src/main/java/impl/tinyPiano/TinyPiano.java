@@ -8,9 +8,7 @@ import piano.PianoKeyListener;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TinyPiano implements Piano {
     private TinyPianoPanel panel;
@@ -18,14 +16,21 @@ public class TinyPiano implements Piano {
     private String firstKey;
     private int numberOfKeys;
     private AudioSource audioSource;
+    private Map<Character, String> binding;
 
-    public TinyPiano(String firstKey, int numberOfKeys, AudioSource audioSource) {
+    public TinyPiano(String firstKey, int numberOfKeys, AudioSource audioSource, Map<Character, String> binding) {
         listeners = new ArrayList<>();
         this.firstKey = firstKey;
         this.numberOfKeys = numberOfKeys;
         this.audioSource = audioSource;
+        this.binding = binding;
 
-        panel = new TinyPianoPanel(firstKey, numberOfKeys);
+        Map<String, Character> keyAssists = new HashMap<>();
+        for(Character ch : binding.keySet()) {
+            keyAssists.put(binding.get(ch), ch);
+        }
+
+        panel = new TinyPianoPanel(firstKey, numberOfKeys, keyAssists);
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -45,6 +50,11 @@ public class TinyPiano implements Piano {
     @Override
     public void play(String key) {
         audioSource.playKey(key);
+    }
+
+    @Override
+    public String getActualKey(char ch) {
+        return binding.get(ch);
     }
 
     @Override
@@ -87,6 +97,17 @@ public class TinyPiano implements Piano {
     public void setShowKeyLabels(boolean show) {
         panel.showLabels(show);
         panel.paintComponent(panel.getGraphics());
+    }
+
+    @Override
+    public void setShowKeyAssist(boolean show) {
+        panel.showKeyAssist(show);
+        panel.paintComponent(panel.getGraphics());
+    }
+
+    @Override
+    public boolean isHighlighted(String key) {
+        return panel.isHighlighted(key);
     }
 
     @Override

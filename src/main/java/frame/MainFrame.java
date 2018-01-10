@@ -7,6 +7,8 @@ import exercise.Exercise;
 import piano.Piano;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -31,6 +33,7 @@ public class MainFrame extends JFrame implements Settings {
     private JButton selectButton = new JButton(Utils.getLocalizedText(L10n.SELECT_BUTTON));
     private JButton stopButton = new JButton(Utils.getLocalizedText(L10n.STOP_BUTTON));
     private JButton configureButton = new JButton(Utils.getLocalizedText(L10n.CONFIGURE_BUTTON));
+    private JCheckBox keyAssistCheckBox = new JCheckBox(Utils.getLocalizedText(L10n.KEY_ASSIST_CHECKBOX));
     private ConfigureFrame configureFrame;
 
     private Exercise exercise;
@@ -52,6 +55,7 @@ public class MainFrame extends JFrame implements Settings {
         selectButton.putClientProperty(L10n.KEY, L10n.SELECT_BUTTON);
         stopButton.putClientProperty(L10n.KEY, L10n.STOP_BUTTON);
         configureButton.putClientProperty(L10n.KEY, L10n.CONFIGURE_BUTTON);
+        keyAssistCheckBox.putClientProperty(L10n.KEY, L10n.KEY_ASSIST_CHECKBOX);
 
         configureFrame = new ConfigureFrame(locales, this::applyLocale);
 
@@ -63,6 +67,11 @@ public class MainFrame extends JFrame implements Settings {
         exercisePanel.setLayout(new GridLayout(4,1));
         selectorPanel.setPreferredSize(new Dimension(pianoWidth, SELECTOR_PANEL_HEIGHT));
         exercisePanel.setPreferredSize(new Dimension(pianoWidth, EXERCISE_PANEL_HEIGHT));
+        exercisePanel.setBackground(Color.WHITE);
+
+        selectorPanel.setBackground(Color.WHITE);
+        exerciseComponentsPanel.setBackground(Color.WHITE);
+        setBackground(Color.WHITE);
 
         selectorBox = new JComboBox<>();
         selectorBox.setPreferredSize(new Dimension(300, 25));
@@ -91,10 +100,14 @@ public class MainFrame extends JFrame implements Settings {
         });
         configureButton.addActionListener(e -> configureFrame.setVisible(true));
 
+        keyAssistCheckBox.setSelected(true);
+        keyAssistCheckBox.addActionListener(e -> piano.setShowKeyAssist(keyAssistCheckBox.isSelected()));
+
         selectorPanel.add(selectorBox);
         selectorPanel.add(selectButton);
         selectorPanel.add(stopButton);
         selectorPanel.add(configureButton);
+        selectorPanel.add(keyAssistCheckBox);
 
         exercisePanel.add(taskLabel);
         exercisePanel.add(statusLabel);
@@ -155,12 +168,19 @@ public class MainFrame extends JFrame implements Settings {
         return configureFrame.getIntervalsList();
     }
 
-    public void keyPressed(KeyEvent e) {
-        logger.info("keyPressed " + e.getKeyChar() + " " + e.getKeyCode());
+    private void keyPressed(KeyEvent e) {
+        String key = piano.getActualKey(e.getKeyChar());
+        if (key != null && !piano.isHighlighted(key)) {
+            piano.play(key);
+            piano.highlight(key);
+        }
     }
 
-    public void keyReleased(KeyEvent e) {
-        logger.info("keyReleased " + e.getKeyChar() + " " + e.getKeyCode());
+    private void keyReleased(KeyEvent e) {
+        String key = piano.getActualKey(e.getKeyChar());
+        if (key != null && piano.isHighlighted(key)) {
+            piano.cancelHighlight(key);
+        }
     }
 
     private class CustomKeyEventDispatcher implements KeyEventDispatcher {

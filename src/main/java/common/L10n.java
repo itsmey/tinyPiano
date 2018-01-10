@@ -28,6 +28,7 @@ public class L10n {
     public static final String ANSWER_BUTTON = "button.answer";
     public static final String PLAY_BUTTON = "button.play";
     public static final String NEXT_BUTTON = "button.next";
+    public static final String KEY_ASSIST_CHECKBOX = "checkbox.key_assist";
 
     private static final String UNISON = "interval.unison";
     private static final String MINOR_SECOND = "interval.minor_second";

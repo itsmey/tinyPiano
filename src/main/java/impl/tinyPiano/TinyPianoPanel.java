@@ -14,11 +14,15 @@ class TinyPianoPanel extends JPanel {
     private Map<String, Rectangle> blackKeys;
     private Map<String, Rectangle> whiteKeys;
     private boolean canShowLabels = true;
+    private boolean canShowKeyAssist = true;
     private Set<String> highlighted = new HashSet<>();
     private Map<String, String> highlightedWithText = new HashMap<>();
+    private Map<String, Character> keyAssists;
 
-    TinyPianoPanel(String firstKey, int numberOfKeys) {
+    TinyPianoPanel(String firstKey, int numberOfKeys, Map<String, Character> keyAssists) {
         super(true);
+
+        this.keyAssists = keyAssists;
 
         blackKeys = new HashMap<>();
         whiteKeys = new HashMap<>();
@@ -38,6 +42,7 @@ class TinyPianoPanel extends JPanel {
             i++;
         }
         setPreferredSize(new Dimension(x, Dimensions.HEIGHT_W + Dimensions.HEADER));
+        setDoubleBuffered(true);
     }
 
     @Override
@@ -60,6 +65,13 @@ class TinyPianoPanel extends JPanel {
             if (canShowLabels) {
                 drawLabelForBlackKey(key, r.x, r.y, g);
             }
+            if (canShowKeyAssist) {
+                Color color = g.getColor();
+                g.setColor(Dimensions.KEY_ASSISR_COLOR);
+                drawLabelForBlackKey(Character.toString(keyAssists.get(key)),
+                        r.x, r.y - g.getFontMetrics().getHeight(), g);
+                g.setColor(color);
+            }
         }
 
         for (Map.Entry<String, Rectangle> e : whiteKeys.entrySet()) {
@@ -74,6 +86,13 @@ class TinyPianoPanel extends JPanel {
             }
             if (canShowLabels) {
                 drawLabelForWhiteKey(key, r.x, r.y, g);
+            }
+            if (canShowKeyAssist) {
+                Color color = g.getColor();
+                g.setColor(Dimensions.KEY_ASSISR_COLOR);
+                drawLabelForWhiteKey(Character.toString(keyAssists.get(key)),
+                        r.x, r.y - g.getFontMetrics().getHeight(), g);
+                g.setColor(color);
             }
         }
 
@@ -100,6 +119,10 @@ class TinyPianoPanel extends JPanel {
         canShowLabels = show;
     }
 
+    void showKeyAssist(boolean show) {
+        canShowKeyAssist = show;
+    }
+
     private void drawLabelForWhiteKey(String key, int x, int y, Graphics g) {
         char[] chars = key.toCharArray();
         int offset = 0;
@@ -113,8 +136,16 @@ class TinyPianoPanel extends JPanel {
         int offset = 0;
         int length = chars.length;
         int width = g.getFontMetrics().charsWidth(chars, offset, length);
-        g.drawChars(chars, offset, length, x + (Dimensions.WIDTH_B - width) / 2, y - Dimensions.LABEL_MARGIN/* - height*/);
+        g.drawChars(chars, offset, length, x + (Dimensions.WIDTH_B - width) / 2, y - Dimensions.LABEL_MARGIN);
     }
+
+//    private void drawKeyAssistForWhiteKey(Character ch, int x, int y, Graphics g) {
+//        char[] chars = {ch};
+//        int offset = 0;
+//        int length = chars.length;
+//        int width = g.getFontMetrics().charsWidth(chars, offset, length);
+//        g.drawChars(chars, offset, length, x + (Dimensions.WIDTH_W - width) / 2, y + Dimensions.HEIGHT_W - Dimensions.LABEL_MARGIN);
+//    }
 
     void highlight(String key) {
         highlighted.add(Key.normalize(key));
@@ -135,6 +166,10 @@ class TinyPianoPanel extends JPanel {
     void setHighlighted(Set<String> keys) {
         highlighted = keys;
         paintComponent(getGraphics());
+    }
+
+    boolean isHighlighted(String key) {
+        return highlighted.contains(key);
     }
 
     private void highlightWhite(Graphics g, Rectangle r) {
