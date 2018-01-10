@@ -16,7 +16,5 @@ public interface Piano {
     void highlight(String key, String text);
     void cancelHighlight(String key);
     void setHighlighted(Set<String> keys);
-    boolean isHighlighted(String Key);
     void play(String key);
-    String getActualKey(char ch);
 }

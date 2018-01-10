@@ -6,11 +6,17 @@ import piano.Piano;
 import piano.PianoKeyListener;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class TinyPiano implements Piano {
+    private static final Logger logger = Logger.getLogger(TinyPiano.class.getName());
     private TinyPianoPanel panel;
     private List<PianoKeyListener> listeners;
     private String firstKey;
@@ -35,11 +41,13 @@ public class TinyPiano implements Piano {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-                keyPressed(panel.determineKeyPressed(e.getX(), e.getY()));
+                notifyListeners(panel.determineKeyPressed(e.getX(), e.getY()));
             }
         });
 
         addKeyListener(audioSource::playKey);
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new CustomKeyEventDispatcher());
     }
 
     @Override
@@ -52,8 +60,7 @@ public class TinyPiano implements Piano {
         audioSource.playKey(key);
     }
 
-    @Override
-    public String getActualKey(char ch) {
+    private String getActualKey(char ch) {
         return binding.get(ch);
     }
 
@@ -105,8 +112,7 @@ public class TinyPiano implements Piano {
         panel.paintComponent(panel.getGraphics());
     }
 
-    @Override
-    public boolean isHighlighted(String key) {
+    private boolean isHighlighted(String key) {
         return panel.isHighlighted(key);
     }
 
@@ -125,12 +131,39 @@ public class TinyPiano implements Piano {
         return numberOfKeys;
     }
 
-    private void keyPressed(String key) {
+    private void notifyListeners(String key) {
         if (key == null) {
             return;
         }
         for (PianoKeyListener listener: listeners) {
             listener.onKeyPressed(key);
+        }
+    }
+
+    private void keyPressed(KeyEvent e) {
+        String key = getActualKey(e.getKeyChar());
+        if (key != null && !isHighlighted(key)) {
+            highlight(key);
+            notifyListeners(key);
+        }
+    }
+
+    private void keyReleased(KeyEvent e) {
+        String key = getActualKey(e.getKeyChar());
+        if (key != null && isHighlighted(key)) {
+            cancelHighlight(key);
+        }
+    }
+
+    private class CustomKeyEventDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
+                keyPressed(e);
+            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+                keyReleased(e);
+            }
+            return false;
         }
     }
 }

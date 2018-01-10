@@ -124,8 +124,26 @@ public class MainFrame extends JFrame implements Settings {
 
         setResizable(false);
 
-        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(new CustomKeyEventDispatcher());
+
+//        piano.getPanel().addKeyListener(new KeyListener() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//                logger.info("pressed");
+//            }
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//
+//            }
+//        });
+//        piano.getPanel().setFocusable(true);
+//        piano.getPanel().requestFocusInWindow();
+
     }
 
     public Piano getPiano() {
@@ -168,30 +186,5 @@ public class MainFrame extends JFrame implements Settings {
         return configureFrame.getIntervalsList();
     }
 
-    private void keyPressed(KeyEvent e) {
-        String key = piano.getActualKey(e.getKeyChar());
-        if (key != null && !piano.isHighlighted(key)) {
-            piano.play(key);
-            piano.highlight(key);
-        }
-    }
 
-    private void keyReleased(KeyEvent e) {
-        String key = piano.getActualKey(e.getKeyChar());
-        if (key != null && piano.isHighlighted(key)) {
-            piano.cancelHighlight(key);
-        }
-    }
-
-    private class CustomKeyEventDispatcher implements KeyEventDispatcher {
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent e) {
-            if (e.getID() == KeyEvent.KEY_PRESSED) {
-                keyPressed(e);
-            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-                keyReleased(e);
-            }
-            return false;
-        }
-    }
 }
